@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1= title
+
+  each item, index in items
+    - var background = color("#"+colors[index % colors.length])
+    - var border = color("#"+colors[index % colors.length]).darken(0.3);
+    div(class='row')
+      a(class="col-xs-12 col-sm-12 col-md-2" href=item.link class='btn btn-lg btn-secondary active' style="background-color: #{background}; border-color: #{border}; color: white;" role='button')= item.name
+      div(class="col-xs-12 col-sm-12 col-md-3") #{item.description}
+
+
+
+
+
+
