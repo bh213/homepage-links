@@ -1,14 +1,23 @@
 extends layout
 
 block content
-  h1= title
+    h1= title
 
-  each item, index in items
-    - var background = color("#"+colors[index % colors.length])
-    - var border = color("#"+colors[index % colors.length]).darken(0.3);
+
+
+
     div(class='row')
-      a(class="col-xs-12 col-sm-12 col-md-2" href=item.link class='btn btn-lg btn-secondary active' style="background-color: #{background}; border-color: #{border}; color: white;" role='button')= item.name
-      div(class="col-xs-12 col-sm-12 col-md-3") #{item.description}
+      each item, index in items
+        - var background = color("#"+colors[index % colors.length])
+        - var border = color("#"+colors[index % colors.length]).darken(0.3);
+        div(class='col-xl-3 col-lg-3 col-md-4 col-sm-6 col-xs-12')
+            div(class='card')
+              div(class="card-header text-xs-center" style="background-color: #{background}; border-color: #{border}; color: white;")=item.name
+              div(class="card-block text-xs-center")
+                i(class="fa hidden-sm-down #{item.icon} fa-4x text-xs-center" style="color: #{background};" aria-hidden="true")
+                p(class='card-text card-description-text' )=item.description
+                a(class="hidden-sm-down " href=item.link class='btn btn-primary active'  role='button')= "Go"
+
 
 
 
