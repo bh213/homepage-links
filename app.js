@@ -4,17 +4,20 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
-var index = require('./routes/index');
-
-YAML = require('yamljs');
-const configPath = "config/config.yml";
-console.info("Loading config file" +  configPath);
-
-var config = YAML.load(configPath);
-console.info("Loaded config file" + JSON.stringify(config));
+var ConfigService = require("./service/config-service.js");
 
 var app = express();
+
+
+
+const configPath = __dirname+"/config/config.yml";
+var configService = new ConfigService(configPath);
+
+var index = require('./routes/index')(configService);
+
+
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -27,19 +30,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+index.config = configService;
 
-
-index.config = config;
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
 app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
 app.use('/css', express.static(__dirname + '/public/stylesheets/')); // redirect CSS bootstrap
 app.use('/awesome', express.static(__dirname + '/node_modules/font-awesome'));
-
 app.use("/", index);
-
-
-
 
 
 // catch 404 and forward to error handler

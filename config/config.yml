@@ -2,62 +2,72 @@ title: UBU
 colors:
   default:
     - 337ab7
-    - 5cb85c
+    - 5cb85cee
     - 5bc0de
     - f0ad4e
     - d9534f
-items:
-  - name: PFsense
-    url: /pfsense
-    link: http://192.168.3.1
-    description: Router & firewall
-    icon: fa-ban
+groups:
+  - name: Homelab
+    items:
+      - name: PFsense
+        url: /pfsense
+        link: http://192.168.3.1
+        description: Router & firewal
+        icon: fa-ban
 
-  - name: Deluge
-    url: /deluge
-    link: http://192.168.3.4:8112
-    description: Bittorrent client
-    icon: fa-download
+      - name: Deluge
+        url: /deluge
+        link: http://192.168.3.4:81
+        description: Bittorrent client
+        icon: fa-download
 
-  - name: Bittorrent sync
-    url: /btsync
-    link: http://192.168.3.4:8888
-    description: Bittorrent sync
-    icon: fa-cloud-download
+      - name: Bittorrent sync
+        url: /btsync
+        link: http://192.168.3.4:8888
+        description: Bittorrent sync
+        icon: fa-cloud-download
 
-  - name: Flexget
-    url: /flexget
-    link: http://192.168.3.4:5050
-    description: Flexget
-    icon: fa-download
+      - name: Flexget
+        url: /flexget
+        link: http://192.168.3.4:5050
+        description: Flexget
+        icon: fa-download
 
-  - name: Unifi
-    url: /unifi
-    link: http://192.168.3.4:8080
-    description: Unifi wireless manager
-    icon: fa-wifi
+      - name: Unifi
+        url: /unifi
+        link: http://192.168.3.4:8080
+        description: Unifi wireless manager
+        icon: fa-wifi
 
-  - name: Diskstation
-    url: /diskstation
-    link: http://192.168.3.2
-    description: Synology NAS
-    icon: fa-server
+      - name: Diskstation
+        url: /diskstation
+        link: http://192.168.3.2
+        description: Synology NAS
+        icon: fa-server
 
-  - name: MAX
-    url: /max
-    link: http://192.168.3.4:44444
-    description: Max! Eq-3 radiatorji
-    icon: fa-thermometer-half
+      - name: MAX
+        url: /max
+        link: http://192.168.3.4:44444
+        description: Max! Eq-3 radiatorji
+        icon: fa-thermometer-half
 
-  - name: TP-Link TL-SG2216
-    url: /switch
-    link: http://192.168.3.170
-    description: 16-port switch
-    icon: fa-server
+      - name: TP-Link TL-SG2216
+        url: /switch
+        link: http://192.168.3.170
+        description: 16-port switch
+        icon: fa-server
 
-  - name: ESXi
-    url: /esxi
-    link: http://192.168.3.160
-    description: ESXI server
-    icon: fa-server
+      - name: ESXi
+        url: /esxi
+        link: http://192.168.3.160
+        description: ESXI server
+        icon: fa-server
 
+
+  - name: Povezave
+    items:
+      - name: Vreme koseze
+        url: /vreme
+        link: http://vreme.zajcek.org/koseze/
+        description: Vremenska postaja Koseze
+        icon: fa-cloud
