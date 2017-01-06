@@ -1,13 +1,73 @@
 title: UBU
 colors:
   default:
-    - 337ab7
-    - 5cb85cee
-    - 5bc0de
-    - f0ad4e
-    - d9534f
+    - '337ab7'
+    - '5cb85c'
+    - '5bc0de'
+    - 'f0ad4e'
+    - 'd9534f'
+  pack:
+     - 'DD1E2F'
+     - 'EBB035'
+     - '06A2CB'
+     - '218559'
+     - 'D0C6B1'
+     - '192823'
+  light:
+     - 'ED5314'
+     - 'FFB92A'
+     - 'FEEB51'
+     - '9BCA3E'
+     - '3ABBC9'
+     - 'E6E6E6'
+  brown:
+     - 'A75C56'
+     - 'AE695A'
+     - 'E89C84'
+     - 'F5C972'
+     - 'EAB06E'
+     - 'C3B274'
+  pink:
+     - 'C5AAF5'
+     - 'A3CBF1'
+     - '79BFA1'
+     - 'F5A352'
+     - 'FB7374'
+     - '423C40'
+
+
 groups:
+  - name: Povezave
+    palette: pack
+    items:
+      - name: Vreme koseze
+        url: /vreme
+        link: http://vreme.zajcek.org/koseze/
+        description: Vremenska postaja Koseze
+        icon: fa-cloud
+
+      - name: Radarska slika padavin
+        url: /dez
+        link: http://www.arso.gov.si/vreme/napovedi%20in%20podatki/radar_animacija.html
+        description: ARSO radarska slika padavin animacija
+        icon: fa-umbrella
+
+      - name: OŠ Koseze
+        url: /sola
+        link: http://www.oskoseze.si
+        description: Osnovna šola Koseze
+        icon: fa-pencil
+
+      - name: Matematika
+        url: /matematika
+        link: http://astra.si
+        description: Posnetki za učenje matematike
+        icon: fa-area-chart
+
+
+
   - name: Homelab
+    palette: pink
     items:
       - name: PFsense
         url: /pfsense
@@ -17,7 +77,7 @@ groups:
 
       - name: Deluge
         url: /deluge
-        link: http://192.168.3.4:81
+        link: http://192.168.3.4:8112
         description: Bittorrent client
         icon: fa-download
 
@@ -62,12 +122,3 @@ groups:
         link: http://192.168.3.160
         description: ESXI server
         icon: fa-server
-
-
-  - name: Povezave
-    items:
-      - name: Vreme koseze
-        url: /vreme
-        link: http://vreme.zajcek.org/koseze/
-        description: Vremenska postaja Koseze
-        icon: fa-cloud

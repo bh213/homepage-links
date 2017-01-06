@@ -5,7 +5,7 @@ var Color = require('color');
 router.get('/', function(req, res, next) {
 
     var config = router.configService.config;
-    res.render('index', { title: config.title, groups: config.groups, colors: config.colors["default"], color: Color });
+    res.render('index', { title: config.title, groups: config.groups, colors: config.colors, color: Color });
 });
 
 router.get('*', function(req, res, next) {

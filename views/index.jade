@@ -3,13 +3,15 @@ extends layout
 block content
     h1(class="site-center")= title
     each group in groups
+        - var selectedPalette = colors[group.palette];
+
         div(class='group-container')
             h3(class='group-title text-xs-center')= group.name
 
             div(class='row')
               each item, index in group.items
-                - var background = color("#"+colors[index % colors.length])
-                - var border = color("#"+colors[index % colors.length]).darken(0.3);
+                - var background = color("#"+selectedPalette[index % selectedPalette.length])
+                - var border = color("#"+selectedPalette[index % selectedPalette.length]).darken(0.3);
                 div(class='col-lg-3 col-md-4 col-sm-6 col-xs-12')
                     div(class='card')
                       div(class="card-header text-xs-center" style="background-color: #{background}; border-color: #{border}; color: white;")
