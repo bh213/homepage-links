@@ -4,25 +4,37 @@ var Color = require('color');
 
 router.get('/', function(req, res, next) {
 
-    var config = router.configService.loadConfig();
-    res.render('index', { title: config.title, groups: config.groups, colors: config.colors, color: Color });
+    router.configService.loadConfig().then(function (config) {
+        res.render('index', { title: config.title, groups: config.groups, colors: config.colors, color: Color });
+    }, function (error) {
+        console.error("on rejected", error);
+        res.render('error', {error:error});
+        }
+    ).catch(function (exception) {
+        console.error("Exception in /", error);
+        res.render('error');
+    });
 });
 
 router.get('*', function(req, res, next) {
-    var config = router.configService.loadConfig();
-
-    for(var group of config.groups)
-    {
-        for(var item of group.items)
-        if (req.path == item.url)
+    router.configService.loadConfig().then(function(config){
+        for(var group of config.groups)
         {
-            console.info("redirecting to " + item.link);
-            res.redirect(item.link);
-            return;
+            for(var item of group.items)
+                if (req.path == item.url)
+                {
+                    console.info("redirecting to " + item.link);
+                    res.redirect(item.link);
+                    return;
+                }
         }
-    }
-    console.error("Route for " + req.path + " not found");
-    res.send('Route not found', 404);
+        console.error("Route for " + req.path + " not found");
+        res.send('Route not found', 404);
+
+    },function (error) {
+        console.error('Error %in gets', error)
+    });
+
 
 });
 

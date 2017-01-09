@@ -1,64 +1,47 @@
-YAML = require('yamljs');
-//var md5= require('md5');
-
-/*
-var http = require('http');
+var util = require("util");
+var YAML = require('yamljs');
 var fs = require('fs');
 
-var download = function(url, dest, cb) {
-    var file = fs.createWriteStream(dest);
-    var request = http.get(url, function(response) {
-        response.pipe(file);
-        file.on('finish', function() {
-            file.close(cb);
+ConfigService.prototype.loadConfig = function () {
+    var self = this;
+
+    return new Promise(function (fulfill, reject) {
+        console.info("load config %s", self.path);
+
+        return fs.stat(self.path, function (err, stats) {
+
+            console.info('%s, %s', err, JSON.stringify(stats));
+            var lm = JSON.stringify(stats.mtime);
+
+            if (self.lastModified != lm) {
+                self.lastModified = lm;
+
+                console.info("Loading config file %s", self.path);
+                YAML.load(self.path, function (data) {
+
+                    self.config = data;
+
+                    if (!data.groups || !data.colors)
+                    {
+                        console.error("Invalid config");
+                        reject("invalid config!");
+                        return;
+                    }
+
+                    console.info("Loaded config file %s", JSON.stringify(self.config));
+                    fulfill(self.config);
+                }, function (error) {
+                    console.error('error loading file %s', error);
+                    reject(error);
+                });
+            }
+            else fulfill(self.config);
         });
     });
-};
-*/
-
-ConfigService.prototype.loadConfig =function() {
-
-    fs.stat(this.path, function(err, stats){
-        var mtime = new Date(util.inspect(stats.mtime));
-        console.log(mtime);
-    });
-    console.log(mtime);
-
-    console.info("Loading config file %s", this.path);
-    this.config = YAML.load(this.path);
-    this.lastChange =
-    console.info("Loaded config file %s", JSON.stringify(this.config));
-    return this.config;
-
-    /* for(var group of this.config.groups)
-     {
-     for(var item of group.items)
-     {
-     loadFavicon(item.link);
-
-     }
-
-     }*/
-
 }
 
-/*function loadFavicon(url)
-{
-    var fetchFavicons = require('@meltwater/fetch-favicon').fetchFavicons
-    var favIcons = fetchFavicons(url, 160).then(function (data) {
-        console.log("favicons %s, %s", url, JSON.stringify(data));
-    })
-
-}*/
-
-
-
 function ConfigService(path) {
-    var self = this;
     this.path = path;
-
-    this.loadConfig();
-
 }
 
 

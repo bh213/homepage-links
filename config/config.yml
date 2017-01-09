@@ -36,7 +36,7 @@ colors:
      - '423C40'
 
 
-groups:
+agroups:
   - name: Povezave
     palette: pack
     items:

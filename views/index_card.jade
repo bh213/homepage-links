@@ -1,0 +1,30 @@
+extends layout
+
+block content
+    h1(class="site-center")= title
+    each group in groups
+        - var selectedPalette = colors[group.palette];
+
+        div(class='group-container')
+            h3(class='group-title text-xs-center')= group.name
+
+            div(class='row')
+              each item, index in group.items
+                - var background = color("#"+selectedPalette[index % selectedPalette.length])
+                - var border = color("#"+selectedPalette[index % selectedPalette.length]).darken(0.3);
+                div(class='col-lg-3 col-md-4 col-sm-6 col-xs-12')
+                    div(class='card')
+                      div(class="card-header text-xs-center" style="background-color: #{background}; border-color: #{border}; color: white;")
+                        a(class="" href=item.link style="background-color: #{background}; border-color: #{border}; color: white;")=item.name
+                      div(class="card-block text-xs-center")
+                        a(href=item.link )
+                          i(class="fa hidden-sm-down #{item.icon} fa-4x text-xs-center" style="color: #{background};" aria-hidden="true")
+                        p(class='card-text card-description-text' )=item.description
+                        a(class="hidden-sm-down " href=item.link class='btn btn-primary active'  role='button')= "Go"
+
+
+
+
+
+
+
