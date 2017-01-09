@@ -4,12 +4,12 @@ var Color = require('color');
 
 router.get('/', function(req, res, next) {
 
-    var config = router.configService.config;
+    var config = router.configService.loadConfig();
     res.render('index', { title: config.title, groups: config.groups, colors: config.colors, color: Color });
 });
 
 router.get('*', function(req, res, next) {
-    var config = router.configService.config;
+    var config = router.configService.loadConfig();
 
     for(var group of config.groups)
     {

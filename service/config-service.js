@@ -16,10 +16,19 @@ var download = function(url, dest, cb) {
 };
 */
 
-function loadConfig(path) {
-    console.info("Loading config file %s", path);
-    this.config = YAML.load(path);
+ConfigService.prototype.loadConfig =function() {
+
+    fs.stat(this.path, function(err, stats){
+        var mtime = new Date(util.inspect(stats.mtime));
+        console.log(mtime);
+    });
+    console.log(mtime);
+
+    console.info("Loading config file %s", this.path);
+    this.config = YAML.load(this.path);
+    this.lastChange =
     console.info("Loaded config file %s", JSON.stringify(this.config));
+    return this.config;
 
     /* for(var group of this.config.groups)
      {
@@ -46,28 +55,10 @@ function loadConfig(path) {
 
 function ConfigService(path) {
     var self = this;
-    var opts = {
-        forcePolling: false,  // try event-based watching first
-        debounce: 10,         // debounce events in non-polling mode by 10ms
-        interval: 60000,       // if we need to poll, do it every 60sec
-        persistent: false      // don't end the process while files are watched
-    };
+    this.path = path;
 
-    loadConfig.call(self, path);
+    this.loadConfig();
 
-    this.filewatcher = require('filewatcher');
-    this.watcher = this.filewatcher(opts);
-    this.watcher.add(path);
-    this.watcher.on('change', function (file, stat) {
-        console.log('File modified: %s %s', file, stat);
-        loadConfig.call(self, path);
-    });
-
-    this.watcher.on('fallback', function(limit) {
-        console.log('Ran out of file handles after watching %s files.', limit);
-        console.log('Falling back to polling which uses more CPU.');
-        console.log('Run ulimit -n 10000 to increase the limit for open files.');
-    });
 }
 
 
