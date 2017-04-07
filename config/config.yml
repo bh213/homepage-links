@@ -1,4 +1,8 @@
 title: UBU
+bases:
+  docker: 10.0.75.1
+     
+
 colors:
   default:
     - '337ab7'
@@ -36,13 +40,13 @@ colors:
      - '423C40'
 
 
-agroups:
+groups:
   - name: Povezave
-    palette: pack
+    palette: pack 
     items:
       - name: Vreme koseze
         url: /vreme
-        link: http://vreme.zajcek.org/koseze/
+        link: http://{docker}/koseze/
         description: Vremenska postaja Koseze
         icon: fa-cloud
 

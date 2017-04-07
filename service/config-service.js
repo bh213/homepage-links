@@ -1,6 +1,7 @@
 var util = require("util");
 var YAML = require('yamljs');
 var fs = require('fs');
+var format = require("string-template")
 
 ConfigService.prototype.loadConfig = function () {
     var self = this;
@@ -20,13 +21,25 @@ ConfigService.prototype.loadConfig = function () {
                 YAML.load(self.path, function (data) {
 
                     self.config = data;
-
+                    
                     if (!data.groups || !data.colors)
                     {
                         console.error("Invalid config");
-                        reject("invalid config!");
+                        reject("invalid config no colors or data!");
                         return;
                     }
+                    
+                    
+                    for(var group of data.groups)
+                    {
+                        console.info("Loading config file %s", group);
+                        for(var item of group.items)
+                        {
+                            item.link = format(item.link, data.bases)
+                        }
+                    }
+                    
+
 
                     console.info("Loaded config file %s", JSON.stringify(self.config));
                     fulfill(self.config);

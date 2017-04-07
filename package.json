@@ -19,6 +19,7 @@
     "jquery": "~3.1.1",
     "morgan": "~1.7.0",
     "serve-favicon": "~2.3.0",
+    "string-template": "^1.0.0",
     "yamljs": "^0.2.8"
   }
 }

@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var Color = require('color');
-
+var format = require("string-template")
 router.get('/', function(req, res, next) {
 
     router.configService.loadConfig().then(function (config) {
-        res.render('index', { title: config.title, groups: config.groups, colors: config.colors, color: Color });
+        res.render('index', { title: config.title, groups: config.groups, colors: config.colors, color: Color, bases: config.bases });
     }, function (error) {
         console.error("on rejected", error);
         res.render('error', {error:error});
