@@ -1,4 +1,4 @@
-title: UBU
+title: Sample config
 bases:
   docker: 10.0.75.1
      
@@ -41,88 +41,42 @@ colors:
 
 
 groups:
-  - name: Povezave
+  - name: Group 1
     palette: pack 
     items:
-      - name: Vreme koseze
-        url: /vreme
-        link: http://{docker}/koseze/
-        description: Vremenska postaja Koseze
+      - name: Docker app 1
+        url: /docker1
+        link: http://{docker}/app1/
+        description: My app
         icon: fa-cloud
 
-      - name: Radarska slika padavin
-        url: /dez
-        link: http://www.arso.gov.si/vreme/napovedi%20in%20podatki/radar_animacija.html
-        description: ARSO radarska slika padavin animacija
+      - name: Google
+        url: /google
+        link: http:/www.google.com
+        description: search engine
         icon: fa-umbrella
 
-      - name: OŠ Koseze
-        url: /sola
-        link: http://www.oskoseze.si
-        description: Osnovna šola Koseze
-        icon: fa-pencil
-
-      - name: Matematika
-        url: /matematika
-        link: http://astra.si
-        description: Posnetki za učenje matematike
-        icon: fa-area-chart
 
 
-
-  - name: Homelab
+  - name: Group 2
     palette: pink
     items:
       - name: PFsense
         url: /pfsense
-        link: http://192.168.3.1
+        link: http://192.168.0.1
         description: Router & firewal
         icon: fa-ban
 
-      - name: Deluge
-        url: /deluge
-        link: http://192.168.3.4:8112
-        description: Bittorrent client
-        icon: fa-download
-
-      - name: Bittorrent sync
-        url: /btsync
-        link: http://192.168.3.4:8888
-        description: Bittorrent sync
-        icon: fa-cloud-download
-
-      - name: Flexget
-        url: /flexget
-        link: http://192.168.3.4:5050
-        description: Flexget
-        icon: fa-download
 
       - name: Unifi
         url: /unifi
-        link: http://192.168.3.4:8080
+        link: http://192.168.0.10:8080
         description: Unifi wireless manager
         icon: fa-wifi
 
-      - name: Diskstation
-        url: /diskstation
-        link: http://192.168.3.2
-        description: Synology NAS
-        icon: fa-server
-
-      - name: MAX
-        url: /max
-        link: http://192.168.3.4:44444
-        description: Max! Eq-3 radiatorji
-        icon: fa-thermometer-half
-
-      - name: TP-Link TL-SG2216
-        url: /switch
-        link: http://192.168.3.170
-        description: 16-port switch
-        icon: fa-server
 
       - name: ESXi
         url: /esxi
-        link: http://192.168.3.160
+        link: http://192.168.0.100
         description: ESXI server
         icon: fa-server
