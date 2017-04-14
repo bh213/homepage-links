@@ -20,6 +20,7 @@ ConfigService.prototype.loadConfig = function () {
                 console.info("Loading config file %s", self.path);
                 YAML.load(self.path, function (data) {
 
+                    Object.assign(data.bases, process.env);
                     self.config = data;
                     
                     if (!data.groups || !data.colors)

@@ -32,7 +32,8 @@ router.get('*', function(req, res, next) {
         res.send('Route not found', 404);
 
     },function (error) {
-        console.error('Error %in gets', error)
+        console.error('Error %s in gets', error)
+        res.send('Error ' + error, 404);
     });
 
 
