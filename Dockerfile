@@ -1,7 +1,10 @@
 FROM node:7
 
-RUN apt-get update && apt-get install -y supervisor python-pip
-RUN pip install supervisor-stdout
+RUN apt-get update && apt-get install -y  --no-install-recommends supervisor python-pip && \
+pip install supervisor-stdout &&\ 
+apt-get remove -y python-pip  && \
+rm -rf /var/lib/apt/lists/*
+
 
 ADD . /app
 RUN chmod 700 /app/bin/www
