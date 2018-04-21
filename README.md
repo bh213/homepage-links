@@ -1,4 +1,6 @@
+[![Docker Automated build](https://img.shields.io/docker/automated/bh213/homepage-links.svg)](https://hub.docker.com/r/bh213/homepage-links/) [![Docker Build Status](https://img.shields.io/docker/build/bh213/homepage-links.svg)](https://hub.docker.com/r/bh213/homepage-links/builds/)
 # homepage-links
+
 
 Simple application for showing webpage with configurable links. Useful for homelab or running as part of docker-compose where there are too many web servers/ports running at the same time.
 
