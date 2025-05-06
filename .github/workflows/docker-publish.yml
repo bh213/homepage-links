@@ -36,13 +36,13 @@ jobs:
           push: false
           platforms: ${{ matrix.platform }}
           tags: ${{ env.REGISTRY }}/bh213/homepage-links:pr-${{ github.event.pull_request.number }}
-          outputs: type=docker,dest=/tmp/image-${{ matrix.platform }}.tar
+          outputs: type=docker,dest=/tmp/image-${{ matrix.platform | replace('/', '-') }}.tar
 
       - name: Upload Docker image
         uses: actions/upload-artifact@v4
         with:
-          name: docker-image-${{ matrix.platform }}
-          path: /tmp/image-${{ matrix.platform }}.tar
+          name: docker-image-${{ matrix.platform | replace('/', '-') }}
+          path: /tmp/image-${{ matrix.platform | replace('/', '-') }}.tar
 
   publish:
     needs: build
