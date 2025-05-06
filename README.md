@@ -1,5 +1,8 @@
 # Homepage Links
 
+[![Docker Image](https://img.shields.io/docker/pulls/bh213/homepage-links?style=flat-square)](https://hub.docker.com/r/bh213/homepage-links)
+[![GitHub Actions](https://img.shields.io/github/actions/workflow/status/bh213/homepage-links/docker-publish.yml?branch=master&style=flat-square)](https://github.com/bh213/homepage-links/actions)
+
 A lightweight, containerized web application that serves as a customizable homepage with organized links and beautiful color palettes. Built with Go and designed to be simple yet visually appealing.
 
 ## Features
@@ -26,7 +29,7 @@ A lightweight, containerized web application that serves as a customizable homep
 docker run --rm --name home-links \
   -p 8080:8080 \
   -v /path/to/your/config.yaml:/data/config.yaml:ro \
-  h213/homepage-links:latest
+  bh213/homepage-links:latest
 ```
 
 ### Environment Variables
@@ -147,7 +150,7 @@ run-local.sh
 ### Building Docker Image
 
 ```bash
-docker build -t h213/homepage-links:latest .
+docker build -t bh213/homepage-links:latest .
 ```
 
 ## License
