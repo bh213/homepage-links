@@ -43,7 +43,7 @@ jobs:
       - name: Upload Docker image
         uses: actions/upload-artifact@v4
         with:
-          name: docker-image-${{ matrix.platform_safe }}
+          name: image-${{ matrix.platform_safe }}
           path: /tmp/image-${{ matrix.platform_safe }}.tar
 
   publish:
@@ -68,8 +68,8 @@ jobs:
 
       - name: Load Docker images
         run: |
-          for image in /tmp/images/docker-image-*.tar; do
-            docker load < $image
+          for image in /tmp/images/image-*.tar; do
+            docker load < "$image"
           done
 
       - name: Log in to Docker Hub
