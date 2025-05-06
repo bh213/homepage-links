@@ -8,7 +8,10 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
+	"sync"
+	"time"
 
 	"gopkg.in/yaml.v3" // YAML parsing library
 )
@@ -21,7 +24,17 @@ var (
 	listenAddr   = getEnv("APP_LISTEN_ADDR", ":8080")
 	yamlPath     = getEnv("APP_YAML_PATH", "/data/config.yaml") // Path inside the container where YAML is mounted
 	templateName = "template.html"                             // Name of the embedded template file
+	cacheSeconds = getEnvInt("APP_CACHE_SECONDS", 0)           // Cache duration in seconds, 0 means no caching
 )
+
+// Cache structure to hold the configuration and its expiration time
+type ConfigCache struct {
+	config     *ConfigData
+	expiresAt  time.Time
+	mu         sync.RWMutex
+}
+
+var configCache = &ConfigCache{}
 
 // --- YAML Data Structures ---
 // These structs are designed to match the new structure with colors and groups.
@@ -59,8 +72,29 @@ func getEnv(key, fallback string) string {
 	return fallback
 }
 
+// getEnvInt gets an environment variable as an integer or returns a fallback value.
+func getEnvInt(key string, fallback int) int {
+	if value, ok := os.LookupEnv(key); ok {
+		if intValue, err := strconv.Atoi(value); err == nil {
+			return intValue
+		}
+	}
+	return fallback
+}
+
 // loadConfig reads and parses the YAML file from the specified path.
+// If caching is enabled, it will return the cached config if it's still valid.
 func loadConfig(path string) (*ConfigData, error) {
+	// Check cache if enabled
+	if cacheSeconds > 0 {
+		configCache.mu.RLock()
+		if configCache.config != nil && time.Now().Before(configCache.expiresAt) {
+			configCache.mu.RUnlock()
+			return configCache.config, nil
+		}
+		configCache.mu.RUnlock()
+	}
+
 	log.Printf("Attempting to load YAML from: %s", path)
 	absPath, err := filepath.Abs(path)
 	if err != nil {
@@ -80,6 +114,16 @@ func loadConfig(path string) (*ConfigData, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to parse YAML file '%s': %w", absPath, err)
 	}
+
+	// Update cache if enabled
+	if cacheSeconds > 0 {
+		configCache.mu.Lock()
+		configCache.config = &config
+		configCache.expiresAt = time.Now().Add(time.Duration(cacheSeconds) * time.Second)
+		configCache.mu.Unlock()
+		log.Printf("Configuration cached for %d seconds", cacheSeconds)
+	}
+
 	log.Printf("Successfully loaded and parsed YAML from: %s", absPath)
 	return &config, nil
 }
@@ -162,6 +206,11 @@ func main() {
 	log.Printf("Starting server...")
 	log.Printf("Listening on: %s", listenAddr)
 	log.Printf("Expecting YAML configuration at: %s", yamlPath)
+	if cacheSeconds > 0 {
+		log.Printf("Configuration caching enabled for %d seconds", cacheSeconds)
+	} else {
+		log.Printf("Configuration caching disabled")
+	}
 
 	if _, err := os.Stat(yamlPath); os.IsNotExist(err) {
 		log.Printf("WARNING: YAML file '%s' not found at startup. Ensure volume is mounted. Will attempt load on first request.", yamlPath)
