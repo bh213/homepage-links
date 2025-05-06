@@ -1,0 +1,1 @@
+docker run --rm --name home-links  -p 8080:8080  -v "C:\Users\goraz\work\homepage-links\demo:/data:ro"   homepage-links:latest

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ .Title }}</title>
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --max-width: 1024px;
+            --container-padding: 20px;
+            --grid-gap: 25px;
+            --font-size-base: 16px;
+            --font-size-h1: 2.2em;
+            --font-size-h2: 1.5em;
+            --font-size-description: 0.85em;
+            --sidebar-width: 0;
+        }
+
+        @media (min-width: 1440px) {
+            :root {
+                --max-width: 1440px;
+                --container-padding: 30px;
+                --grid-gap: 30px;
+                --font-size-base: 16px;
+                --font-size-h1: 2em;
+                --font-size-h2: 1.4em;
+                --font-size-description: 0.85em;
+                --sidebar-width: 250px;
+            }
+        }
+
+        @media (min-width: 1920px) {
+            :root {
+                --max-width: 1920px;
+                --container-padding: 40px;
+                --grid-gap: 35px;
+                --font-size-base: 18px;
+                --font-size-h1: 2.2em;
+                --font-size-h2: 1.5em;
+                --font-size-description: 0.9em;
+                --sidebar-width: 300px;
+            }
+        }
+
+        @media (min-width: 3840px) {
+            :root {
+                --max-width: 2560px;
+                --container-padding: 60px;
+                --grid-gap: 45px;
+                --font-size-base: 20px;
+                --font-size-h1: 2.5em;
+                --font-size-h2: 1.7em;
+                --font-size-description: 1em;
+                --sidebar-width: 400px;
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            padding: var(--container-padding);
+            max-width: var(--max-width);
+            margin: 0 auto;
+            background-color: #f8f9fa;
+            color: #343a40;
+            font-size: var(--font-size-base);
+        }
+
+        .main-layout {
+            display: flex;
+            gap: var(--grid-gap);
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            flex-shrink: 0;
+            display: none;
+        }
+
+        @media (min-width: 1440px) {
+            .sidebar {
+                display: block;
+            }
+        }
+
+        .sidebar h1 {
+            margin: 0;
+            color: #333;
+            font-size: var(--font-size-h1);
+            line-height: 1.2;
+            position: sticky;
+            top: var(--container-padding);
+        }
+
+        .content {
+            flex-grow: 1;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: var(--grid-gap);
+        }
+
+        @media (min-width: 1440px) {
+            .container {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+
+        @media (min-width: 1920px) {
+            .container {
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            }
+        }
+
+        @media (min-width: 3840px) {
+            .container {
+                grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+            }
+        }
+
+        .group {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .group-header {
+            padding: calc(var(--container-padding) * 0.5) var(--container-padding);
+            margin: 0;
+            font-size: var(--font-size-h2);
+            color: #fff;
+            background-color: #6c757d;
+            border-bottom: 1px solid #eee;
+            line-height: 1.2;
+        }
+
+        .group ul {
+            list-style: none;
+            padding: calc(var(--container-padding) * 0.75);
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        .group li {
+            margin-bottom: 10px;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .group li:hover {
+            transform: translateX(5px);
+        }
+
+        .group a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+            padding: 12px 15px;
+            border-radius: 5px;
+            border-left: 5px solid transparent;
+            background-color: #f8f9fa;
+            transition: background-color 0.2s ease-in-out, border-left-color 0.2s ease-in-out;
+            word-break: break-word;
+        }
+
+        .group a:hover {
+            background-color: #e9ecef;
+        }
+
+        .item-content {
+            display: flex;
+            align-items: center;
+        }
+
+        .item .icon {
+            display: inline-block;
+            width: 1.5em;
+            text-align: center;
+            margin-right: 12px;
+            color: inherit;
+            font-size: 1.1em;
+        }
+
+        .item .text-content {
+            flex-grow: 1;
+        }
+
+        .item .name {
+            font-weight: 500;
+            display: block;
+        }
+
+        .item .description {
+            font-size: var(--font-size-description);
+            color: #6c757d;
+            display: block;
+            margin-top: 4px;
+        }
+
+        footer {
+            margin-top: calc(var(--container-padding) * 2);
+            text-align: center;
+            font-size: 0.9em;
+            color: #6c757d;
+            padding-top: var(--container-padding);
+            border-top: 1px solid #dee2e6;
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --container-padding: 15px;
+                --grid-gap: 15px;
+                --font-size-base: 14px;
+            }
+
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .mobile-header {
+            display: block;
+            text-align: center;
+            margin-bottom: var(--container-padding);
+            padding-bottom: calc(var(--container-padding) * 0.5);
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .mobile-header h1 {
+            margin: 0;
+            color: #333;
+            font-size: var(--font-size-h1);
+            line-height: 1.2;
+        }
+
+        @media (min-width: 1440px) {
+            .mobile-header {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-header">
+        <h1>{{ .Title }}</h1>
+    </div>
+    <div class="main-layout">
+        <div class="sidebar">
+            <h1>{{ .Title }}</h1>
+        </div>
+        <div class="content">
+            <div class="container">
+                {{ range $groupIndex, $group := .Groups }}
+                    {{ $palette := getPalette $.Colors $group.Palette }}
+                    {{ $headerColor := getColor $palette 0 }}
+                    <div class="group">
+                        <h2 class="group-header" style="background-color: {{ $headerColor }};">{{ $group.Name }}</h2>
+                        <ul>
+                            {{ range $itemIndex, $item := $group.Items }}
+                                {{ $itemColor := getColor $palette $itemIndex }}
+                                <li class="item">
+                                    <a href="{{ $item.Link }}" target="_blank" rel="noopener noreferrer" style="border-left-color: {{ $itemColor }};">
+                                        <div class="item-content">
+                                            {{ if $item.Icon }}
+                                                {{ if hasPrefix $item.Icon "fa-" }}
+                                                    <i class="icon fas {{ $item.Icon }}" aria-hidden="true"></i>
+                                                {{ else if hasPrefix $item.Icon "fas " }}
+                                                    <i class="icon {{ $item.Icon }}" aria-hidden="true"></i>
+                                                {{ else if hasPrefix $item.Icon "far " }}
+                                                    <i class="icon {{ $item.Icon }}" aria-hidden="true"></i>
+                                                {{ else if hasPrefix $item.Icon "fab " }}
+                                                    <i class="icon {{ $item.Icon }}" aria-hidden="true"></i>
+                                                {{ else if hasPrefix $item.Icon "fal " }}
+                                                    <i class="icon {{ $item.Icon }}" aria-hidden="true"></i>
+                                                {{ else }}
+                                                    <i class="icon fas fa-{{ $item.Icon }}" aria-hidden="true"></i>
+                                                {{ end }}
+                                            {{ else }}
+                                                <i class="icon fas fa-link" aria-hidden="true"></i>
+                                            {{ end }}
+                                            <div class="text-content">
+                                                <span class="name">{{ $item.Name }}</span>
+                                                {{ if $item.Description }}
+                                                    <span class="description">{{ $item.Description }}</span>
+                                                {{ end }}
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            {{ end }}
+                        </ul>
+                    </div>
+                {{ end }}
+            </div>
+            <footer>
+                homepage-links
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
